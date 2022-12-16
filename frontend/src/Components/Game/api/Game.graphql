@@ -1,0 +1,25 @@
+query GetGame($id: ID) {
+    getGame(id: $id) {
+      userCards {
+        ...Card
+      }
+      cardOnTable {
+        ...CardOnTable
+      }
+    }
+  }
+
+fragment CardOnTable on CardOnTable {
+  position {...User}
+  card {...Card}
+}
+
+fragment Card on Card {
+  type
+}
+
+fragment User on User {
+  id
+  username
+  order
+}

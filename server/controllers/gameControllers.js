@@ -1,54 +1,84 @@
-const AllCards = {
-  D_7:'7_D',
-  D_8:'8_D',
-  D_9:'9_D',
-  D_10:'10_D',
-  D_J:'J_D',
-  D_Q:'Q_D',
-  D_K:'K_D',
-  D_A:'A_D',
-  H_7:'7_H',
-  H_8:'8_H',
-  H_9:'9_H',
-  H_10:'10_H',
-  H_J:'J_H',
-  H_Q:'Q_H',
-  H_K:'K_H',
-  H_A:'A_H',
-  S_7:'7_S',
-  S_8:'8_S',
-  S_9:'9_S',
-  S_10:'10_S',
-  S_J:'J_S',
-  S_Q:'Q_S',
-  S_K:'K_S',
-  S_A:'A_S',
-  C_7:'7_C',
-  C_8:'8_C',
-  C_9:'9_C',
-  C_10:'10_C',
-  C_J:'J_C',
-  C_Q:'Q_C',
-  C_K:'K_C',
-  C_A:'A_C',
+const users = []
+
+const getId = (input) => {
+  const id = input.username.toUpperCase()
+  return {
+      id,
+      username: input.username,
+      order: users.length
+  }
 }
 
+const getAllUsers = () => {
+  return users
+}
+const getUser = ({id}) => {
+  return users.find(user => user.id == id)
+}
+const createUser = ({input}) => {
+  const oldUser = users.find(item => item.id === input.username.toUpperCase())
+  if(oldUser) return oldUser
+  if(users.length > 2) throw new Error('ВСЕ МЕСТА ЗАНЯТЫ')
+  const user = getId(input);
+  users.push(user)
+  return user
+}
+
+const AllCards = {
+  C_7:'C_7',
+  C_8:'C_8',
+  C_9:'C_9',
+  C_10:'C_10',
+  C_A:'C_A',
+  C_J:'C_J',
+  C_K:'C_K',
+  C_Q:'C_Q',
+  D_7:'D_7',
+  D_8:'D_8',
+  D_9:'D_9',
+  D_10:'D_10',
+  D_A:'D_A',
+  D_J:'D_J',
+  D_K:'D_K',
+  D_Q:'D_Q',
+  H_7:'H_7',
+  H_8:'H_8',
+  H_9:'H_9',
+  H_10:'H_10',
+  H_A:'H_A',
+  H_J:'H_J',
+  H_K:'H_K',
+  H_Q:'H_Q',
+  S_7:'S_7',
+  S_8:'S_8',
+  S_9:'S_9',
+  S_10:'S_10',
+  S_A:'S_A',
+  S_J:'S_J',
+  S_K:'S_K',
+  S_Q:'S_Q'
+}
+
+
+
+
+
 const userCard1 = {
-  id: 'alik',
+  id: 'ALIK',
   cards: [{
     type: AllCards.C_K
   }]
 }
 
 const userCard2 = {
-  id: 'valera',
+  id: 'VALERA',
   cards: [{
     type: AllCards.H_K
   }]
 }
 
 const userCard3 = {
-  id: 'dima',
+  id: 'DIMA',
   cards: [{
     type: AllCards.S_K
   }]
@@ -57,15 +87,15 @@ const userCard3 = {
 const Game = {
   cardOnTable: [
     {
-      position: 'userId1',
+      position: ()=>{return users[0]},
       card: {type: AllCards.C_7}
     },
     {
-      position: 'userId2',
+      position: ()=>{return users[0]},
       card: {type: AllCards.C_8}
     },
     {
-      position: 'userId3',
+      position: ()=>{return users[0]},
       card: {type: AllCards.C_9}
     }
   ],
@@ -80,5 +110,5 @@ const getGame = ({id}) => {
   }
 }
 
-module.exports = {getGame}
+module.exports = {getGame, getAllUsers, getUser, createUser}
 

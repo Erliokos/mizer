@@ -1,12 +1,12 @@
 import React from 'react'
-import { ICardOnTable } from '../../common/types/globalTypes'
+import { CardOnTableFragment } from '../../generated/operations'
 import { Enemy } from './Enemy/Enemy'
 import { EEnemyPosition } from './Enemy/types'
 import * as Styled from './Style'
 import { Table } from './Table/Table'
 
 type TProps = {
-  cards: ICardOnTable[]
+  cards: CardOnTableFragment[]
 }
 
 export function TableContainer({cards}: TProps) {

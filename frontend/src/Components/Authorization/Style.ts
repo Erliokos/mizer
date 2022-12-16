@@ -4,7 +4,7 @@ export const AuthorizationCantainer = styled.div`
   position: absolute;
   width: 100vw;
   height: 100vh;
-  background-color: green;
+  background-color: rgb(36,100,39);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,6 +14,7 @@ export const AuthorizationCantainer = styled.div`
   z-index: 20;
 `
 
-export const Name = styled.div`
+export const Name = styled.div<{color?: string}>`
+  color: ${({color}) => color ?? 'white'};
   margin: 8px;
 `

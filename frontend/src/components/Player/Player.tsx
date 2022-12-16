@@ -1,15 +1,15 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
-import { ICard, ICardOnTable } from '../../common/types/globalTypes'
+import { Card as CType, CardOnTable } from '../../generated/operations'
 import { Card } from '../Card/Card'
 import * as Styled from './Style'
 
 type TProps = {
-  cards: ICard[]
-  setCardsOnTable: Dispatch<SetStateAction<ICardOnTable[]>>
+  cards: CType[]
+  setCardsOnTable: Dispatch<SetStateAction<CardOnTable[]>>
 }
 
 export function Player({ cards, setCardsOnTable }: TProps) {
-  const [playerCards, setPlayerCards] = useState<ICard[]>(cards)
+  const [playerCards, setPlayerCards] = useState<CType[]>(cards)
   return (
     <Styled.Container>
       {playerCards.map(item => (

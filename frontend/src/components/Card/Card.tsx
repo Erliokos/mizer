@@ -1,17 +1,12 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import {
-  ECardType,
-  EPlayer,
-  ICard,
-  ICardOnTable
-} from '../../common/types/globalTypes'
+import { Card as CardType, CardOnTable, ECardType } from '../../generated/operations'
 import * as Styled from './Style'
 
 type CardProps = {
   type: ECardType
   disable?: boolean
-  setCards?: Dispatch<SetStateAction<ICard[]>>
-  setCardsOnTable?: Dispatch<SetStateAction<ICardOnTable[]>>
+  setCards?: Dispatch<SetStateAction<CardType[]>>
+  setCardsOnTable?: Dispatch<SetStateAction<CardOnTable[]>>
 }
 
 export function Card({
@@ -24,8 +19,8 @@ export function Card({
     if (disable || !setCards || !setCardsOnTable) return
     setCards(prev => prev.filter(item => item.type !== type))
     setCardsOnTable(prev => {
-      const cardOnTable: ICardOnTable = {
-        position: EPlayer.player,
+      const cardOnTable: CardOnTable = {
+        position: {id: 'user', username: 'user', order: 0},
         card: { type }
       }
       return [...prev, cardOnTable]
