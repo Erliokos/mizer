@@ -8,6 +8,9 @@ export const Root = createGlobalStyle`
     font-size: 12px;
     font-family: Arial, Helvetica, sans-serif;
   }
+  body {
+    overflow: hidden;
+  }
 `
 export const Body = styled.div`
   position: absolute;
@@ -16,3 +19,4 @@ export const Body = styled.div`
   height: 100vh;
   z-index: -10;
 `
+
