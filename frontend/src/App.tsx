@@ -1,13 +1,16 @@
-import "./App.css";
-import Users from "./Components/Users/Users";
+import React from 'react'
+import { Game } from './components/Game/Game'
+import { Navbar } from './components/Navbar/Navbar'
+
 
 function App() {
 
   return (
-    <div className="Mizer">
-     <Users/>
-    </div>
-  );
+    <>
+      <Navbar />
+      <Game />
+    </>
+  )
 }
 
-export default App;
+export default App
