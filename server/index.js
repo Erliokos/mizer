@@ -1,5 +1,6 @@
 const express = require('express')
 const {graphqlHTTP} = require('express-graphql')
+const {getGame} = require('./controllers/gameControllers')
 const cors = require('cors')
 const schema = require('./shema')
 const { graphql, GraphQLError } = require('graphql')
@@ -29,7 +30,8 @@ const root = {
         console.log(users);
         
         return user
-    }
+    },
+    getGame
 }
 
 

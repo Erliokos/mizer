@@ -1,39 +1,42 @@
-import React, { useState } from 'react'
+import { useQuery } from '@apollo/client'
+import React, { useEffect, useState } from 'react'
 import {
   ECardType,
   EPlayer,
   ICardOnTable
 } from '../../common/types/globalTypes'
+import { GET_GAME } from '../../graphql/query/users'
 import { ChatWindow } from '../Chat/ChatWindow/ChatWindow'
 import { Player } from '../Player/Player'
+import { EEnemyPosition } from '../TableContainer/Enemy/types'
 import { TableContainer } from '../TableContainer/TableContainer'
 import * as Styled from './Style'
 
-export function Game() {
-  const cardsOnTableFromBack: ICardOnTable[] = [
-    {
-      position: EPlayer.enemyLeft,
-      card: { type: ECardType.C_A }
-    },
-    {
-      position: EPlayer.enemyRight,
-      card: { type: ECardType.S_A }
-    },
-  ]
+type TProps = {
+  id: string
+}
 
-  const [cardsOnTable, setCardsOnTable] = useState<ICardOnTable[]>(cardsOnTableFromBack)
+export function Game({id}: TProps) {
+  
+  const {data} = useQuery(GET_GAME, {variables:{id}, pollInterval: 1000})
+  const [cardsOnTable, setCardsOnTable] = useState<ICardOnTable[]>([])
 
-  const myCards = [
-    { type: ECardType.D_7 },
-    { type: ECardType.D_8 },
-    { type: ECardType.D_9 }
-  ]
+  useEffect(()=>{
+    const cards = (data?.getGame?.cardOnTable ?? []).map((item: ICardOnTable) => {
+      const cardOnTable: ICardOnTable = {
+        position: EPlayer.enemyLeft,
+        card: {type: ECardType.C_10}
+      }
+      return cardOnTable
+    })
+    setCardsOnTable(cards)
+  },[data])
 
   return (
     <Styled.Container>
       <ChatWindow />
       <TableContainer cards={cardsOnTable} />
-      <Player cards={myCards} setCardsOnTable={setCardsOnTable}/>
+      <Player cards={[]} setCardsOnTable={setCardsOnTable}/>
     </Styled.Container>
   )
 }

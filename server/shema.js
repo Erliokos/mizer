@@ -12,10 +12,27 @@ const schema = buildSchema(`
         username: String!
     }
     
+    
+    type Card {
+        type: String
+    }
+    
+    type CardOnTable {
+        position: String
+        card: Card
+    }
+    
+    type Game {
+        cardOnTable: [CardOnTable]
+        userCards: [Card]
+    }
+    
     type Query {
         getAllUsers: [User]
         getUser(id: ID): User
+        getGame(id: ID): Game
     }
+
     type Mutation {
         createUser(input: UserInput): User
     }

@@ -3,7 +3,8 @@ export interface ICard {
 }
 
 export interface IGame {
-
+  cardOnTable: ICardOnTable[]
+  userCard: ICard[]
 }
 export enum EPlayer {
   enemyLeft = 'enemyLeft',

@@ -13,7 +13,7 @@ function App() {
     <>
       {userId == null && <Authorization setUserId={setUserId}/>}
       <Navbar />
-      <Game />
+      {userId != null && <Game id={userId} />}
     </>
   )
 }
