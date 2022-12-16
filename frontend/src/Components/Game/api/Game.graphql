@@ -1,17 +1,27 @@
 query GetGame($id: ID) {
-    getGame(id: $id) {
-      userCards {
-        ...Card
-      }
-      cardOnTable {
-        ...CardOnTable
-      }
+  getGame(id: $id) {
+    userCards {
+      ...Card
+    }
+    cardOnTable {
+      ...CardOnTable
     }
   }
+}
+
+query GetAllUser {
+  getAllUsers {
+    ...User
+  }
+}
 
 fragment CardOnTable on CardOnTable {
-  position {...User}
-  card {...Card}
+  position {
+    ...User
+  }
+  card {
+    ...Card
+  }
 }
 
 fragment Card on Card {

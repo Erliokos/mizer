@@ -29,3 +29,15 @@ export const EnemyBody = styled.div<{ position: EEnemyPosition }>`
       `
   })}
 `
+
+export const Name = styled.div`
+  position: absolute;
+  top: -50px;
+  width: 100%;
+  height: 35px;
+  background-color: gray;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`

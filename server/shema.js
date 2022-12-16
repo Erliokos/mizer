@@ -63,7 +63,7 @@ const schema = buildSchema(`
     }
     
     type Query {
-        getAllUsers: [User]
+        getAllUsers: [User]!
         getUser(id: ID): User
         getGame(id: ID): Game!
     }

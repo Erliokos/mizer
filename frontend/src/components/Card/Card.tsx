@@ -6,25 +6,19 @@ type CardProps = {
   type: ECardType
   disable?: boolean
   setCards?: Dispatch<SetStateAction<CardType[]>>
-  setCardsOnTable?: Dispatch<SetStateAction<CardOnTable[]>>
+  handleChangeCardsOnTable?: (type: ECardType) => void
 }
 
 export function Card({
   type,
   setCards,
   disable = false,
-  setCardsOnTable
+  handleChangeCardsOnTable
 }: CardProps) {
   const handleClick = () => {
-    if (disable || !setCards || !setCardsOnTable) return
+    if (disable || !setCards || !handleChangeCardsOnTable) return
     setCards(prev => prev.filter(item => item.type !== type))
-    setCardsOnTable(prev => {
-      const cardOnTable: CardOnTable = {
-        position: {id: 'user', username: 'user', order: 0},
-        card: { type }
-      }
-      return [...prev, cardOnTable]
-    })
+    handleChangeCardsOnTable(type)
   }
   return (
     <Styled.CardContainer onClick={handleClick}>
