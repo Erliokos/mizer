@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import * as Styled from './Style'
+import * as GlobalStyled from '../../GlobalStyle'
 
 export function ChatInput() {
 
@@ -17,7 +18,7 @@ export function ChatInput() {
   return (
     <Styled.ChatContainer>
       <form onSubmit={handleSubmit}>
-      <Styled.Input onChange={handleChange} value={message}/>
+      <GlobalStyled.Input onChange={handleChange} value={message}/>
       </form>
     </Styled.ChatContainer>
   )

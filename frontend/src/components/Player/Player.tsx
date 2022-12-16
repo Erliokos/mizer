@@ -13,9 +13,8 @@ export function Player({ cards, setCardsOnTable }: TProps) {
   return (
     <Styled.Container>
       {playerCards.map(item => (
-        <Styled.Card>
-          <Card {...item} setCards={setPlayerCards} setCardsOnTable={setCardsOnTable}/>
-
+        <Styled.Card key={item.type + 'style'}>
+          <Card key={item.type} {...item} setCards={setPlayerCards} setCardsOnTable={setCardsOnTable}/>
         </Styled.Card>
       ))}
     </Styled.Container>
