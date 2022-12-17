@@ -32,3 +32,18 @@ export const ImgWrapper = styled.img`
   width: 100%;
   height: 100%;
 `
+
+export const Message = styled.div`
+  position: absolute;
+  top: 200px;
+  width: 100%;
+  font-size: 24px;
+  font-weight: lighter;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  text-align: center;
+
+`

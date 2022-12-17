@@ -13,9 +13,10 @@ type TProps = {
   cards: CType[]
   setUserCards: Dispatch<SetStateAction<CType[]>>
   setCardsOnTable: Dispatch<SetStateAction<CardOnTable[]>>
+  disable: boolean
 }
 
-export function Player({ user, cards, setCardsOnTable, setUserCards }: TProps) {
+export function Player({ user, cards, setCardsOnTable, setUserCards, disable = false }: TProps) {
   const handleChangeCardsOnTable = (type: ECardType) => {
     setCardsOnTable(prev => {
       const enemyCards = prev.filter(item => item.position.id !== user.id)
@@ -34,6 +35,7 @@ export function Player({ user, cards, setCardsOnTable, setUserCards }: TProps) {
       {cards.map(item => (
         <Styled.Card key={item.type + 'style'}>
           <Card
+            disable={disable}
             key={item.type}
             {...item}
             setCards={setUserCards}

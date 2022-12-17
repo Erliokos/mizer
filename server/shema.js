@@ -60,6 +60,9 @@ const schema = buildSchema(`
     type Game {
         cardOnTable: [CardOnTable!]!
         userCards: [Card!]!
+        userMove: User
+        initPrikup: Boolean!
+        message: String
     }
     
     type Query {

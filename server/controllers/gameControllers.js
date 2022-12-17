@@ -83,30 +83,31 @@ const userCard3 = {
     type: AllCards.S_K
   }]
 }
+const getOrder = () => {
+  return 0
+}
+
 
 const Game = {
-  cardOnTable: [
-    {
-      position: ()=>{return users[0]},
-      card: {type: AllCards.C_7}
-    },
-    {
-      position: ()=>{return users[0]},
-      card: {type: AllCards.C_8}
-    },
-    {
-      position: ()=>{return users[0]},
-      card: {type: AllCards.C_9}
-    }
-  ],
-  userCards: [userCard1, userCard2, userCard3]
+  cardOnTable: [],
+  userCards: [],
+}
+
+const getMessage = () => {
+  if(users.length === 1) return 'ЖДЕМ ДВУХ ИГРОКОВ'
+  if(users.length === 2) return 'ЖДЕМ ОДНОГО ИГРОКА'
+  if(users.length === 3) return `КАРТЫ РОЗДАНЫ ИГРОК ИГРОК ${users[getOrder()].id} НАЧИНАЕТ ГОЛОСОВАТЬ ЗА ПРИКУП` 
+  return
 }
 
 
 const getGame = ({id}) => {
   return {
-    cardOnTable: Game.cardOnTable,
-    userCards: Game.userCards.find(item => item.id === id).cards
+    cardOnTable: [],
+    userCards: [],
+    userMove: () => users[getOrder()],
+    initPrikup: true,
+    message: getMessage()
   }
 }
 

@@ -33,7 +33,7 @@ export const EnemyBody = styled.div<{ position: EEnemyPosition }>`
 export const Name = styled.div`
   position: absolute;
   top: -50px;
-  width: 100%;
+  width: 50%;
   height: 35px;
   background-color: gray;
   border-radius: 2px;

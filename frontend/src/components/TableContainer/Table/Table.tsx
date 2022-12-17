@@ -7,14 +7,16 @@ import { TableUser } from './types'
 type TProps = {
   cards: CardOnTable[]
   players?: TableUser
+  message?: string
 }
 
-export function Table({ cards, players }: TProps) {
+export function Table({ cards, players, message }: TProps) {
   const EnemyLeftCard = cards.find(item => item.position.id === players?.EnemyLeft?.id)
   const EnemyRightCard = cards.find(item => item.position.id === players?.EnemyRight?.id )
   const PlayerCard = cards.find(item => item.position.id === players?.Player?.id)
   return (
     <Styled.Table>
+      <Styled.Message>{message}</Styled.Message>
       <Styled.EnemyLeft>
         {EnemyLeftCard && <Card type={EnemyLeftCard.card.type} />}
       </Styled.EnemyLeft>

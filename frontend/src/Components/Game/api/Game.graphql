@@ -6,6 +6,11 @@ query GetGame($id: ID) {
     cardOnTable {
       ...CardOnTable
     }
+    userMove {
+      ...User
+    }
+    initPrikup
+    message
   }
 }
 

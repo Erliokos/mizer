@@ -10,9 +10,10 @@ import * as Styled from './Style'
 type TProps = {
   user: User
   cards: CardOnTableFragment[]
+  message?: string
 }
 
-export function TableContainer({ cards, user }: TProps) {
+export function TableContainer({ cards, user, message }: TProps) {
   const [players, setPlayers] = useState<TableUser>()
   useGetAllUserQuery({
     pollInterval: 1000,
@@ -31,7 +32,7 @@ export function TableContainer({ cards, user }: TProps) {
   return (
     <Styled.Container>
       <Enemy position={EEnemyPosition.left} online={players?.EnemyLeft != null} player={players?.EnemyLeft} />
-      <Table cards={cards} players={players}/>
+      <Table cards={cards} players={players} message={message}/>
       <Enemy position={EEnemyPosition.right} online={players?.EnemyRight != null} player={players?.EnemyRight}  />
     </Styled.Container>
   )
