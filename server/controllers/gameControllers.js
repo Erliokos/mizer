@@ -15,14 +15,7 @@ const getAllUsers = () => {
 const getUser = ({id}) => {
   return users.find(user => user.id == id)
 }
-const createUser = ({input}) => {
-  const oldUser = users.find(item => item.id === input.username.toUpperCase())
-  if(oldUser) return oldUser
-  if(users.length > 2) throw new Error('ВСЕ МЕСТА ЗАНЯТЫ')
-  const user = getId(input);
-  users.push(user)
-  return user
-}
+
 
 const AllCards = {
   C_7:'C_7',
@@ -103,12 +96,42 @@ const getMessage = () => {
 
 const getGame = ({id}) => {
   return {
-    cardOnTable: [],
-    userCards: [],
+    cardOnTable: Game.cardOnTable,
+    userCards: Game.userCards.length ? Game.userCards.find(item => item.position.id === id).cards : [],
     userMove: () => users[getOrder()],
     initPrikup: true,
     message: getMessage()
   }
+}
+
+const getRandomCard = () => {
+  const cards = Object.values(AllCards)
+  const shuffleCards = cards.sort(() => Math.random() - 0.5);
+  const prikup = shuffleCards.splice(0,2)
+  const userCard = shuffleCards.splice(0,9)
+  const userCard1 = shuffleCards.splice(0,9)
+  const userCard2 = shuffleCards.splice(0,9)
+  return [prikup, userCard, userCard1, userCard2]
+}
+
+const initGame = () => {
+  const  [prikup, userCard, userCard1, userCard2] = getRandomCard()
+  
+  Game.userCards = [
+    {position: users[0], cards: userCard.map(item =>({type: item}))},
+    {position: users[1], cards: userCard1.map(item =>({type: item}))},
+    {position: users[2], cards: userCard2.map(item =>({type: item}))},
+  ]
+}
+
+const createUser = ({input}) => {
+  const oldUser = users.find(item => item.id === input.username.toUpperCase())
+  if(oldUser) return oldUser
+  if(users.length > 2) throw new Error('ВСЕ МЕСТА ЗАНЯТЫ')
+  const user = getId(input);
+  users.push(user)
+  if(users.length === 3) initGame()
+  return user
 }
 
 module.exports = {getGame, getAllUsers, getUser, createUser}
