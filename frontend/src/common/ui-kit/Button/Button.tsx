@@ -6,7 +6,7 @@ export type ButtonProps = {
   onClick: () => void
 }
  
-export default function Button({text, onClick}: ButtonProps) {
+export function Button({text, onClick}: ButtonProps) {
   return (
     <Styled.Root onClick={onClick}>{text}</Styled.Root>
   )

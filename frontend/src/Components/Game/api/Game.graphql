@@ -11,6 +11,12 @@ query GetGame($id: ID) {
     }
     initPrikup
     message
+    prikupSave
+    playedCards{
+      pcards {
+        ...Card
+      }
+    }
   }
 }
 

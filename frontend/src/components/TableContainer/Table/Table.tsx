@@ -1,7 +1,7 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
-import Button from '../../../common/ui-kit/Button'
+import React, { useState } from 'react'
+import {Button} from '../../../common/ui-kit/Button'
 import { useGetPrikupMutation, usePassPrikupMutation } from '../../../generated/hooks'
-import { Card as CType, CardOnTable } from '../../../generated/operations'
+import { CardOnTable } from '../../../generated/operations'
 import { Card } from '../../Card/Card'
 import * as Styled from './Style'
 import { TableUser } from './types'
@@ -12,10 +12,9 @@ type TProps = {
   message?: string
   prikup: boolean
   userTurn: boolean
-  setUserCards: Dispatch<SetStateAction<CType[]>>
 }
 
-export function Table({ cards, players, message, prikup, userTurn, setUserCards }: TProps) {
+export function Table({ cards, players, message, prikup, userTurn }: TProps) {
   const EnemyLeftCard = cards.find(
     item => item.position.id === players?.EnemyLeft?.id
   )
@@ -32,9 +31,7 @@ export function Table({ cards, players, message, prikup, userTurn, setUserCards 
   const handleClickTake = async () => {
     if(vote) return
     setVote(true)
-    await getPrikup({onCompleted(data) {
-      setUserCards(prev => [...prev, ...data.getPrikup])
-    },})
+    await getPrikup()
   }
   const handleClickPass = async () => {
     if(vote) return

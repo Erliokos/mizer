@@ -1,6 +1,6 @@
 const express = require('express')
 const {graphqlHTTP} = require('express-graphql')
-const {getGame, createUser, getUser, getAllUsers, passPrikup, getPrikup} = require('./controllers/gameControllers')
+const {getGame, createUser, getUser, getAllUsers, passPrikup, getPrikup, putPrikup, putCard} = require('./controllers/gameControllers')
 const cors = require('cors')
 const schema = require('./shema')
 const { graphql, GraphQLError } = require('graphql')
@@ -14,13 +14,15 @@ const root = {
     createUser,
     getGame,
     passPrikup,
-    getPrikup
+    getPrikup,
+    putPrikup,
+    putCard
 }
 
 app.use('/graphql', graphqlHTTP({
     graphiql: true,
     schema,
-    rootValue: root
+    rootValue: root,
 }))
 
 app.listen(4000, () => console.log('Сервер еще не отвалился на 4000'))

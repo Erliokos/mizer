@@ -1,0 +1,11 @@
+mutation PutPrikup($input: PrikupInput){
+  putPrikup(input: $input){
+    id
+  }
+}
+
+mutation PutCard($input: PutCardInput) {
+  putCard(input: $input){
+    ...Card
+  }
+}

@@ -46,15 +46,27 @@ const schema = buildSchema(`
         id: ID
         username: String!
     }
-    
+
     
     type Card {
         type: ECardType!
     }
 
+    input PrikupInput {
+        prikup: [String!]!
+    }
+
+    input PutCardInput {
+        type: String!
+    }
+
     type CardOnTable {
         position: User!
         card: Card!
+    }
+
+    type PCards {
+        pcards: [Card!]!
     }
     
     type Game {
@@ -63,6 +75,8 @@ const schema = buildSchema(`
         userMove: User
         initPrikup: Boolean!
         message: String
+        prikupSave: Boolean!
+        playedCards: [PCards!]!
     }
     
     type Query {
@@ -76,6 +90,8 @@ const schema = buildSchema(`
         createUser(input: UserInput): User
         passPrikup: User
         getPrikup: [Card!]!
+        putPrikup(input: PrikupInput): User
+        putCard(input: PutCardInput): [Card!]!
     }
 `)
 

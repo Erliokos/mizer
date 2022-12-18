@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import { Card as CardType, CardOnTable, ECardType } from '../../generated/operations'
+import { Card as CardType, ECardType } from '../../generated/operations'
 import * as Styled from './Style'
 
 type CardProps = {
@@ -16,9 +16,9 @@ export function Card({
   handleChangeCardsOnTable
 }: CardProps) {
   const handleClick = () => {
-    if (disable || !setCards || !handleChangeCardsOnTable) return
+    if (disable || !setCards) return
     setCards(prev => prev.filter(item => item.type !== type))
-    handleChangeCardsOnTable(type)
+    handleChangeCardsOnTable?.(type)
   }
   return (
     <Styled.CardContainer onClick={handleClick}>

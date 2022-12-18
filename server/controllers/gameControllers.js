@@ -8,7 +8,9 @@ const Game = {
   order: 0,
   mizer: false,
   message: '',
-  start: false
+  start: false,
+  prikupSave: false,
+  playedCards: []
 }
 
 const clearMessage = () => {
@@ -116,7 +118,9 @@ const getGame = ({id}) => {
     userCards: Game.userCards.length ? Game.userCards.find(item => item.position.id === id).cards : [],
     userMove: () => users[getOrder()],
     initPrikup: Game.initPrikup,
-    message: getMessage()
+    message: getMessage(),
+    prikupSave: Game.prikupSave,
+    playedCards: Game.playedCards
   }
 }
 
@@ -124,9 +128,9 @@ const getRandomCard = () => {
   const cards = Object.values(AllCards)
   const shuffleCards = cards.sort(() => Math.random() - 0.5);
   const prikup = shuffleCards.splice(0,2)
-  const userCard = shuffleCards.splice(0,9)
-  const userCard1 = shuffleCards.splice(0,9)
-  const userCard2 = shuffleCards.splice(0,9)
+  const userCard = shuffleCards.splice(0,10)
+  const userCard1 = shuffleCards.splice(0,10)
+  const userCard2 = shuffleCards.splice(0,10)
   return [prikup, userCard, userCard1, userCard2]
 }
 
@@ -134,9 +138,9 @@ const initGame = () => {
   const  [prikup, userCard, userCard1, userCard2] = getRandomCard()
   
   Game.userCards = [
-    {position: users[0], cards: userCard.map(item =>({type: item}))},
-    {position: users[1], cards: userCard1.map(item =>({type: item}))},
-    {position: users[2], cards: userCard2.map(item =>({type: item}))},
+    {position: users[0], cards: userCard.map(item =>({type: item})), bank: []},
+    {position: users[1], cards: userCard1.map(item =>({type: item})), bank: []},
+    {position: users[2], cards: userCard2.map(item =>({type: item})), bank: []},
   ]
   Game.prikup = prikup.map(item => ({type: item}))
   Game.initPrikup = true
@@ -158,8 +162,26 @@ const nextOrder = () => {
   if(Game.order === 2) return 0
 }
 
+const getCurentUserCards = () => {
+  return Game.userCards.find(user => user.position.id === users[getOrder()].id)
+}
+
+const putPrikupOnUserCard = () => {
+  const curentUserCard = getCurentUserCards()
+  curentUserCard.cards = [...curentUserCard.cards, ...Game.prikup]
+}
+
 const getPrikup = () => {
+  putPrikupOnUserCard()
+  startGame()
   return Game.prikup
+}
+const startGame = () => {
+  Game.start = true
+  Game.prikupSave = true
+  Game.initPrikup = false
+  Game.message = `ПРИКУП ВЗЯЛ ${users[getOrder()].id}`
+  clearMessage()
 }
 
 const startMizerGame = () => {
@@ -180,5 +202,31 @@ const passPrikup = () => {
   return users[Game.order]
 }
 
-module.exports = {getGame, getAllUsers, getUser, createUser, passPrikup, getPrikup}
+const putPrikup = ({input: {prikup}}) => {
+    const curentUserCard = getCurentUserCards()
+    curentUserCard.cards = curentUserCard.cards.filter(item => !prikup.includes(item.type))
+    curentUserCard.bank = [...curentUserCard.bank, ...prikup]
+    Game.prikupSave = false;
+    return users[getOrder()]
+}
+
+const computeStep = (list) => {
+  
+  Game.cardOnTable = []
+}
+
+const putCard = ({input: {type}}) => {
+  Game.cardOnTable = [...Game.cardOnTable, {position: users[getOrder()], card:{type}}]
+  const curentUserCard = getCurentUserCards()
+  curentUserCard.cards = curentUserCard.cards.filter(item => item.type !== type)
+  if(Game.cardOnTable.length === 3) {
+    Game.playedCards = [...Game.playedCards, {pcards: Game.cardOnTable.map(item => item.card)}]
+    computeStep(Game.cardOnTable)
+    return []
+  }
+  Game.order = nextOrder()
+  return []
+}
+
+module.exports = {getGame, getAllUsers, getUser, createUser, passPrikup, getPrikup, putPrikup, putCard}
 
