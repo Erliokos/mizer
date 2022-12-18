@@ -84,6 +84,8 @@ const getOrder = () => {
 const Game = {
   cardOnTable: [],
   userCards: [],
+  prikup: [],
+  initPrikup: false
 }
 
 const getMessage = () => {
@@ -93,13 +95,14 @@ const getMessage = () => {
   return
 }
 
+let initPrikup = true
 
 const getGame = ({id}) => {
   return {
     cardOnTable: Game.cardOnTable,
     userCards: Game.userCards.length ? Game.userCards.find(item => item.position.id === id).cards : [],
     userMove: () => users[getOrder()],
-    initPrikup: true,
+    initPrikup: Game.initPrikup,
     message: getMessage()
   }
 }
@@ -122,6 +125,8 @@ const initGame = () => {
     {position: users[1], cards: userCard1.map(item =>({type: item}))},
     {position: users[2], cards: userCard2.map(item =>({type: item}))},
   ]
+  Game.prikup = prikup.map(item => ({type: item}))
+  Game.initPrikup = true
 }
 
 const createUser = ({input}) => {
