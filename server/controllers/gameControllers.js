@@ -72,36 +72,9 @@ const AllCards = {
   S_Q:'S_Q'
 }
 
-
-
-
-
-const userCard1 = {
-  id: 'ALIK',
-  cards: [{
-    type: AllCards.C_K
-  }]
-}
-
-const userCard2 = {
-  id: 'VALERA',
-  cards: [{
-    type: AllCards.H_K
-  }]
-}
-
-const userCard3 = {
-  id: 'DIMA',
-  cards: [{
-    type: AllCards.S_K
-  }]
-}
 const getOrder = () => {
   return Game.order
 }
-
-
-
 
 const getMessage = () => {
   if(Game.message != '') return Game.message
@@ -211,7 +184,7 @@ const putPrikup = ({input: {prikup}}) => {
 }
 
 const computeStep = (list) => {
-  
+  if(Game.userCards[0].cards.length === 0) Game.message = 'КОНЕЦ ИГРЫ'
   Game.cardOnTable = []
 }
 
