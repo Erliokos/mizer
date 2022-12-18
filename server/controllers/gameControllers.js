@@ -1,5 +1,23 @@
 const users = []
 
+const Game = {
+  cardOnTable: [],
+  userCards: [],
+  prikup: [],
+  initPrikup: false,
+  order: 0,
+  mizer: false,
+  message: '',
+  start: false
+}
+
+const clearMessage = () => {
+  const timer = setTimeout(() => {
+    Game.message = ''
+    clearTimeout(timer)
+  }, 3000)
+}
+
 const getId = (input) => {
   const id = input.username.toUpperCase()
   return {
@@ -77,25 +95,20 @@ const userCard3 = {
   }]
 }
 const getOrder = () => {
-  return 0
+  return Game.order
 }
 
 
-const Game = {
-  cardOnTable: [],
-  userCards: [],
-  prikup: [],
-  initPrikup: false
-}
+
 
 const getMessage = () => {
+  if(Game.message != '') return Game.message
   if(users.length === 1) return 'ЖДЕМ ДВУХ ИГРОКОВ'
   if(users.length === 2) return 'ЖДЕМ ОДНОГО ИГРОКА'
-  if(users.length === 3) return `КАРТЫ РОЗДАНЫ ИГРОК ИГРОК ${users[getOrder()].id} НАЧИНАЕТ ГОЛОСОВАТЬ ЗА ПРИКУП` 
+  if(users.length === 3 && Game.initPrikup) return `КАРТЫ РОЗДАНЫ ИГРОК ИГРОК ${users[getOrder()].id} НАЧИНАЕТ ГОЛОСОВАТЬ ЗА ПРИКУП`
+  if(Game.cardOnTable.length === 0 && Game.start) return `ХОДИТ ИГРОК ${users[getOrder()].id}`
   return
 }
-
-let initPrikup = true
 
 const getGame = ({id}) => {
   return {
@@ -139,5 +152,33 @@ const createUser = ({input}) => {
   return user
 }
 
-module.exports = {getGame, getAllUsers, getUser, createUser}
+const nextOrder = () => {
+  if(Game.order === 0) return 1
+  if(Game.order === 1) return 2
+  if(Game.order === 2) return 0
+}
+
+const getPrikup = () => {
+  return Game.prikup
+}
+
+const startMizerGame = () => {
+  Game.start = true
+  Game.initPrikup = false
+  Game.mizer = true
+  Game.message = 'НИ КТО НЕ ВЗЯЛ ПРИКУП, ИГРАЕМ НА МИЗЕР'
+  clearMessage()
+}
+
+let countVotes = 0
+
+const passPrikup = () => {
+  if(countVotes > 2) return null
+  Game.order = nextOrder()
+  countVotes++;
+  if(countVotes === 3) startMizerGame()
+  return users[Game.order]
+}
+
+module.exports = {getGame, getAllUsers, getUser, createUser, passPrikup, getPrikup}
 

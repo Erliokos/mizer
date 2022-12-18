@@ -1,0 +1,13 @@
+mutation PassPrikup{
+  passPrikup {
+    id
+  }
+}
+
+mutation GetPrikup{
+  getPrikup {
+    ...Card
+  }
+}
+
+

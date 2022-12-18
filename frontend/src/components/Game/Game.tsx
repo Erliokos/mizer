@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useGetGameQuery, UserFragmentDoc } from '../../generated/hooks'
+import { useGetGameQuery } from '../../generated/hooks'
 import { Card, CardOnTable, User } from '../../generated/operations'
 import { ChatWindow } from '../Chat/ChatWindow/ChatWindow'
 import { Player } from '../Player/Player'
@@ -15,6 +15,7 @@ export function Game({ user }: TProps) {
   const [userCards, setUserCards] = useState<Card[]>([])
   const [userMove, setUserMove] = useState<User | null>()
   const [message, setMessage] = useState<string | undefined>()
+  const [isPrikup, setPrikup] = useState<boolean>(false)
 
   useGetGameQuery({
     variables: { id: user.id },
@@ -24,14 +25,28 @@ export function Game({ user }: TProps) {
       setCardsOnTable(() => data?.getGame.cardOnTable ?? [])
       setUserMove(() => data.getGame.userMove)
       setMessage(data.getGame.message ?? undefined)
+      setPrikup(data.getGame.initPrikup)
     }
   })
 
   return (
     <Styled.Container>
       <ChatWindow />
-      <TableContainer user={user} cards={cardsOnTable} message={message} />
-      <Player disable={user.order !== userMove?.order} user={user} cards={userCards} setCardsOnTable={setCardsOnTable} setUserCards={setUserCards}/>
+      <TableContainer
+        user={user}
+        cards={cardsOnTable}
+        message={message}
+        prikup={isPrikup}
+        userTurn={user.order === userMove?.order}
+        setUserCards={setUserCards}
+      />
+      <Player
+        disable={user.order !== userMove?.order}
+        user={user}
+        cards={userCards}
+        setCardsOnTable={setCardsOnTable}
+        setUserCards={setUserCards}
+      />
     </Styled.Container>
   )
 }

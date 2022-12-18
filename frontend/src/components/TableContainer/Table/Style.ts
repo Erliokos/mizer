@@ -45,5 +45,13 @@ export const Message = styled.div`
   justify-content: center;
   padding: 0 16px;
   text-align: center;
-
+`
+export const Prikup = styled.div`
+  position: absolute;
+  top: 25px;
+  left: 50px;
+  width: 350px;
+  height: 60px;
+  display: flex;
+  align-items: center;
 `

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import { useGetAllUserQuery } from '../../generated/hooks'
-import { CardOnTableFragment, User } from '../../generated/operations'
+import { Card, CardOnTableFragment, User } from '../../generated/operations'
 import { Enemy } from './Enemy/Enemy'
 import { EEnemyPosition } from './Enemy/types'
 import { Table } from './Table/Table'
@@ -11,9 +11,12 @@ type TProps = {
   user: User
   cards: CardOnTableFragment[]
   message?: string
+  prikup: boolean
+  userTurn: boolean
+  setUserCards: Dispatch<SetStateAction<Card[]>>
 }
 
-export function TableContainer({ cards, user, message }: TProps) {
+export function TableContainer({ cards, user, message, prikup, userTurn, setUserCards}: TProps) {
   const [players, setPlayers] = useState<TableUser>()
   useGetAllUserQuery({
     pollInterval: 1000,
@@ -26,13 +29,10 @@ export function TableContainer({ cards, user, message }: TProps) {
     }
   })
 
-  console.log(players);
-  
-
   return (
     <Styled.Container>
       <Enemy position={EEnemyPosition.left} online={players?.EnemyLeft != null} player={players?.EnemyLeft} />
-      <Table cards={cards} players={players} message={message}/>
+      <Table cards={cards} players={players} message={message} prikup={prikup} userTurn={userTurn} setUserCards={setUserCards}/>
       <Enemy position={EEnemyPosition.right} online={players?.EnemyRight != null} player={players?.EnemyRight}  />
     </Styled.Container>
   )

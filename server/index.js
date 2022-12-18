@@ -1,6 +1,6 @@
 const express = require('express')
 const {graphqlHTTP} = require('express-graphql')
-const {getGame, createUser, getUser, getAllUsers} = require('./controllers/gameControllers')
+const {getGame, createUser, getUser, getAllUsers, passPrikup, getPrikup} = require('./controllers/gameControllers')
 const cors = require('cors')
 const schema = require('./shema')
 const { graphql, GraphQLError } = require('graphql')
@@ -12,7 +12,9 @@ const root = {
     getAllUsers,
     getUser,
     createUser,
-    getGame
+    getGame,
+    passPrikup,
+    getPrikup
 }
 
 app.use('/graphql', graphqlHTTP({

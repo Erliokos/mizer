@@ -69,10 +69,13 @@ const schema = buildSchema(`
         getAllUsers: [User]!
         getUser(id: ID): User
         getGame(id: ID): Game!
+        getPrikup: [Card!]!
     }
 
     type Mutation {
         createUser(input: UserInput): User
+        passPrikup: User
+        getPrikup: [Card!]!
     }
 `)
 
