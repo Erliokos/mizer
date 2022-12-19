@@ -21,3 +21,8 @@ export const Row = styled.div`
   height:70px;
   margin: 4px;
 `
+export const Points = styled.div`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+`

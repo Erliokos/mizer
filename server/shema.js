@@ -68,6 +68,11 @@ const schema = buildSchema(`
     type PCards {
         pcards: [Card!]!
     }
+
+    type Points {
+        id: String!
+        point: Int!
+    }
     
     type Game {
         cardOnTable: [CardOnTable!]!
@@ -77,6 +82,7 @@ const schema = buildSchema(`
         message: String
         prikupSave: Boolean!
         playedCards: [PCards!]!
+        points: [Points!]!
     }
     
     type Query {

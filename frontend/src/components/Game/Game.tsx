@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useGetGameQuery } from '../../generated/hooks'
-import { Card, CardOnTable, PCards, User } from '../../generated/operations'
+import { Card, CardOnTable, PCards, Points, User } from '../../generated/operations'
 import { ChatWindow } from '../Chat/ChatWindow/ChatWindow'
 import { Player } from '../Player/Player'
 import { TableContainer } from '../TableContainer/TableContainer'
@@ -19,6 +19,7 @@ export function Game({ user }: TProps) {
   const [isPrikup, setPrikup] = useState<boolean>(false)
   const [prikupSave, setPrikupSave] = useState<boolean>(false)
   const [playedCards, setPlayedCards] = useState<PCards[]>([])
+  const [points, setPoints] = useState<Points[]>([])
 
   useGetGameQuery({
     variables: { id: user.id },
@@ -31,11 +32,15 @@ export function Game({ user }: TProps) {
       setPrikup(data.getGame.initPrikup)
       setPrikupSave(data.getGame.prikupSave)
       setPlayedCards(data.getGame.playedCards)
+      setPoints(prev => data.getGame.points)
     }
   })
 
   return (
     <Styled.Container>
+      <Styled.Points>
+        {points.map(item => <div>{item.id}{item.point}</div>)}
+      </Styled.Points>
       <Styled.PlayedCards>
       {playedCards.map((item, index) => 
           <CardRow key={index} pcards={item.pcards}></CardRow>

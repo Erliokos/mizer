@@ -17,6 +17,9 @@ query GetGame($id: ID) {
         ...Card
       }
     }
+    points {
+      ...Points
+    }
   }
 }
 
@@ -24,6 +27,10 @@ query GetAllUser {
   getAllUsers {
     ...User
   }
+}
+fragment Points on Points {
+  id
+  point
 }
 
 fragment CardOnTable on CardOnTable {
