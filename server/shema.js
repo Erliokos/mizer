@@ -83,6 +83,7 @@ const schema = buildSchema(`
         prikupSave: Boolean!
         playedCards: [PCards!]!
         points: [Points!]!
+        endGame: Boolean!
     }
     
     type Query {

@@ -10,7 +10,8 @@ const Game = {
   message: '',
   start: false,
   prikupSave: false,
-  playedCards: []
+  playedCards: [],
+  endGame: false
 }
 
 const clearMessage = () => {
@@ -134,7 +135,12 @@ const getGame = ({ id }) => {
     message: getMessage(),
     prikupSave: Game.prikupSave,
     playedCards: Game.playedCards,
-    points: () => Game.userCards.map(item => ({id: item.position.id, point: item.point})) ?? []
+    points: () =>
+      Game.userCards.map(item => ({
+        id: item.position.id,
+        point: item.point
+      })) ?? [],
+    endGame: Game.endGame
   }
 }
 
@@ -239,14 +245,17 @@ const putPrikup = ({ input: { prikup } }) => {
     item => !prikup.includes(item.type)
   )
   curentUserCard.bank = [...curentUserCard.bank, ...prikup]
-  curentUserCard.point = prikup.reduce((acc, item) => acc + CardsPoint[item].point, 0)
-  console.log(curentUserCard);
+  curentUserCard.point = prikup.reduce(
+    (acc, item) => acc + CardsPoint[item].point,
+    0
+  )
+  console.log(curentUserCard)
   Game.prikupSave = false
   return users[getOrder()]
 }
 
 const computeCard = list => {
-  const generalCard = list.map(({card, position}) => ({
+  const generalCard = list.map(({ card, position }) => ({
     ...CardsPoint[card.type],
     id: position.id
   }))
@@ -258,17 +267,24 @@ const computeCard = list => {
       return card
     })
     .sort((a, b) => b.rang - a.rang)[0]
-  
-  const curentUserCard = Game.userCards.find(item => item.position.id === winner.id)
+
+  const curentUserCard = Game.userCards.find(
+    item => item.position.id === winner.id
+  )
   Game.order = curentUserCard.position.order
   curentUserCard.bank = [...curentUserCard.bank, ...list]
-  curentUserCard.point = curentUserCard.point + generalCard.reduce((acc, item) => acc + item.point, 0)
-  console.log(curentUserCard);
+  curentUserCard.point =
+    curentUserCard.point +
+    generalCard.reduce((acc, item) => acc + item.point, 0)
+  console.log(curentUserCard)
 }
 
 const computeStep = list => {
   computeCard(list)
-  if (Game.userCards[0].cards.length === 0) Game.message = 'КОНЕЦ ИГРЫ'
+  if (Game.userCards[0].cards.length === 0) {
+    Game.endGame = true
+    Game.message = 'КОНЕЦ ИГРЫ'
+  }
   Game.cardOnTable = []
 }
 
