@@ -144,9 +144,17 @@ const getGame = ({ id }) => {
   }
 }
 
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 const getRandomCard = () => {
   const cards = Object.values(AllCards)
-  const shuffleCards = cards.sort(() => Math.random() - 0.5)
+  const shuffleCards = shuffle(cards)
   const prikup = shuffleCards.splice(0, 2)
   const userCard = shuffleCards.splice(0, 10)
   const userCard1 = shuffleCards.splice(0, 10)
