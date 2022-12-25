@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const AuthorizationCantainer = styled.div`
   position: absolute;
@@ -12,9 +12,9 @@ export const AuthorizationCantainer = styled.div`
   padding: 8px;
   border-radius: 2px;
   z-index: 20;
-`
+`;
 
 export const Name = styled.div<{color?: string}>`
-  color: ${({color}) => color ?? 'white'};
+  color: ${({ color }) => color ?? 'white'};
   margin: 8px;
-`
+`;

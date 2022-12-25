@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Table = styled.div`
   position: relative;
   height: 450px;
   width: 450px;
   z-index: 11;
-`
+`;
 
 export const EnemyLeft = styled.div`
   position: absolute;
@@ -13,25 +13,25 @@ export const EnemyLeft = styled.div`
   left: 16px;
   width: 80px;
   height: 113px;
-`
+`;
 export const EnemyRight = styled.div`
   position: absolute;
   top: 169px;
   right: 16px;
   width: 80px;
   height: 113px;
-`
+`;
 export const Player = styled.div`
   position: absolute;
   bottom: 16px;
   left: 185px;
   width: 80px;
   height: 113px;
-`
+`;
 export const ImgWrapper = styled.img`
   width: 100%;
   height: 100%;
-`
+`;
 
 export const Message = styled.div`
   position: absolute;
@@ -45,7 +45,7 @@ export const Message = styled.div`
   justify-content: center;
   padding: 0 16px;
   text-align: center;
-`
+`;
 export const Prikup = styled.div`
   position: absolute;
   top: 25px;
@@ -54,4 +54,4 @@ export const Prikup = styled.div`
   height: 60px;
   display: flex;
   align-items: center;
-`
+`;

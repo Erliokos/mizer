@@ -1,4 +1,4 @@
-import  styled, {createGlobalStyle} from "styled-components";
+import styled, { createGlobalStyle } from 'styled-components';
 
 export const Root = createGlobalStyle`
   * {
@@ -11,14 +11,14 @@ export const Root = createGlobalStyle`
   body {
     overflow: hidden;
   }
-`
+`;
 export const Body = styled.div`
   position: absolute;
   background-color: rgb(77,77,77);
   width: 100vw;
   height: 100vh;
   z-index: -10;
-`
+`;
 
 export const Input = styled.input`
   width: 450px;
@@ -29,5 +29,5 @@ export const Input = styled.input`
   color: rgb(77,77,77);
   font-size: 12px;
   border-radius: 2px;
-`
+`;
 

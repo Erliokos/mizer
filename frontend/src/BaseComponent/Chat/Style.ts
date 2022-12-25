@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ChatContainer = styled.div`
   position: absolute;
@@ -8,5 +8,4 @@ export const ChatContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-`
+`;

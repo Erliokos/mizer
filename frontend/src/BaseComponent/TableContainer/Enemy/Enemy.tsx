@@ -1,15 +1,15 @@
-import React from 'react'
-import { EEnemyPosition } from './types'
-import { User } from '../../../generated/operations'
-import * as Styled from './Style'
+import React from 'react';
+import { EEnemyPosition } from './types';
+import { User } from '../../../generated/operations';
+import * as Styled from './Style';
 
-type TProps = {
-  position: EEnemyPosition
-  online: boolean
-  player: User | null | undefined
-}
+interface TProps {
+  position: EEnemyPosition;
+  online: boolean;
+  player: User | null | undefined;
+};
 
-export function Enemy({position, online = false, player}: TProps) {
+export function Enemy({ position, online = false, player }: TProps) {
   return (
     <>
       <Styled.Enemy>
@@ -20,5 +20,5 @@ export function Enemy({position, online = false, player}: TProps) {
         </Styled.EnemyBody>
       </Styled.Enemy>
     </>
-  )
+  );
 }

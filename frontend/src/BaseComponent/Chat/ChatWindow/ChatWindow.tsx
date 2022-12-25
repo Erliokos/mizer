@@ -1,19 +1,18 @@
-import React from 'react'
-import * as Styled from './Style'
+import React from 'react';
+import * as Styled from './Style';
 
 export function ChatWindow() {
-
   const data = {
-    message: 
+    message:
       [
-        "игра начата",
-        "режим игры не мизер"
-      ]
-  }
-  
+        'игра начата',
+        'режим игры не мизер',
+      ],
+  };
+
   return (
     <Styled.Container>
       {data.message.map(item => <div key={item}>{item}</div>)}
     </Styled.Container>
-  )
+  );
 }

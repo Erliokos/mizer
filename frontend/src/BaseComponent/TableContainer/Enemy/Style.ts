@@ -1,6 +1,6 @@
 
-import styled, { css } from "styled-components";
-import { EEnemyPosition } from "./types";
+import styled, { css } from 'styled-components';
+import { EEnemyPosition } from './types';
 
 
 export const Enemy = styled.div`
@@ -8,13 +8,13 @@ export const Enemy = styled.div`
   width: 268px;
   height: 268px;
   margin: 0 64px;
-`
+`;
 
 export const EnemyBody = styled.div<{ position: EEnemyPosition }>`
   position: absolute;
   top: 0;
   ${(({ position }) => {
-    return position === EEnemyPosition.left 
+    return position === EEnemyPosition.left
       ? css`
         position: absolute;
         left: 0;
@@ -26,9 +26,9 @@ export const EnemyBody = styled.div<{ position: EEnemyPosition }>`
       right: 0;
       top: 0;
       z-index: 10;
-      `
+      `;
   })}
-`
+`;
 
 export const Name = styled.div`
   position: absolute;
@@ -40,4 +40,4 @@ export const Name = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   margin-top: 8px;
@@ -12,7 +12,7 @@ export const Container = styled.div`
   letter-spacing: 12px;
   color: white;
   
-`
+`;
 export const LogoBlock = styled.div`
   display: flex;
   flex-direction: column;
@@ -21,4 +21,4 @@ export const LogoBlock = styled.div`
   > *:not(:last-child) {
     margin-right: 10px;
   }
-`
+`;

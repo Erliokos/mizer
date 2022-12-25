@@ -1,23 +1,23 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { Button } from '../../common/ui-kit/Button'
-import { usePutCardMutation, usePutPrikupMutation } from '../../generated/hooks'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Button } from '../../common/ui-kit/Button';
+import { usePutCardMutation, usePutPrikupMutation } from '../../generated/hooks';
 import {
   Card as CType,
   CardOnTable,
   ECardType,
-  User
-} from '../../generated/operations'
-import { Card } from '../Card/Card'
-import * as Styled from './Style'
+  User,
+} from '../../generated/operations';
+import { Card } from '../Card/Card';
+import * as Styled from './Style';
 
-type TProps = {
-  user: User
-  cards: CType[]
-  setUserCards: Dispatch<SetStateAction<CType[]>>
-  setCardsOnTable: Dispatch<SetStateAction<CardOnTable[]>>
-  disable: boolean
-  prikupSave: boolean
-}
+interface TProps {
+  user: User;
+  cards: CType[];
+  setUserCards: Dispatch<SetStateAction<CType[]>>;
+  setCardsOnTable: Dispatch<SetStateAction<CardOnTable[]>>;
+  disable: boolean;
+  prikupSave: boolean;
+};
 
 export function Player({
   user,
@@ -25,55 +25,55 @@ export function Player({
   setCardsOnTable,
   setUserCards,
   disable = false,
-  prikupSave
+  prikupSave,
 }: TProps) {
-  const [prikup, setPrikup] = useState<CType[]>([])
+  const [prikup, setPrikup] = useState<CType[]>([]);
 
-  const [disableWithInitPrikup, setDisableWithInitPrikup] = useState<boolean>(false)
-  
+  const [disableWithInitPrikup, setDisableWithInitPrikup] = useState<boolean>(false);
+
 
   useEffect(()=>{
-    setDisableWithInitPrikup(false)
-  },[disable, cards])
+    setDisableWithInitPrikup(false);
+  },[disable, cards]);
 
-  const [putPrikup] = usePutPrikupMutation()
-  const [putCard] = usePutCardMutation()
+  const [putPrikup] = usePutPrikupMutation();
+  const [putCard] = usePutCardMutation();
 
   const handleClickPutPrikup = () => {
-    setDisableWithInitPrikup(false)
+    setDisableWithInitPrikup(false);
     putPrikup({
-      variables: { input: { prikup: prikup.map(item => item.type) } }
-    }).then()
-  }
+      variables: { input: { prikup: prikup.map(item => item.type) } },
+    }).then();
+  };
 
   const handleChangeCardsOnTable = (type: ECardType) => {
     if (prikupSave && cards.length > 9) {
       setPrikup(prev => {
-        const cards = [...prev, { type }]
-        if (cards.length === 2) setDisableWithInitPrikup(true)
-        return cards
-      })
-      return
+        const cards = [...prev, { type }];
+        if (cards.length === 2) {setDisableWithInitPrikup(true);}
+        return cards;
+      });
+      return;
     }
-    putCard({variables: {input:{type}}}).then()
-    setDisableWithInitPrikup(true)
+    putCard({ variables: { input:{ type } } }).then();
+    setDisableWithInitPrikup(true);
     setCardsOnTable(prev => {
-      const enemyCards = prev.filter(item => item.position.id !== user.id)
+      const enemyCards = prev.filter(item => item.position.id !== user.id);
       const myCard: CardOnTable = {
         card: {
-          type
+          type,
         },
-        position: user
-      }
-      return [...enemyCards, myCard]
-    })
-  }
+        position: user,
+      };
+      return [...enemyCards, myCard];
+    });
+  };
 
   return (
     <Styled.Wrapper>
       {prikup.length > 0 && prikupSave && (
         <>
-          {prikup.length === 2 && <Button text={'Положить'} onClick={handleClickPutPrikup}/>}
+          {prikup.length === 2 && <Button text={'Положить'} onClick={handleClickPutPrikup} />}
           <Styled.Prikup>
             {prikup.map(item => (
               <Styled.CardPrikup key={item.type + 'styleType'}>
@@ -82,8 +82,9 @@ export function Player({
                   {...item}
                   setCards={setPrikup}
                   handleChangeCardsOnTable={(type)=>{
-                    setDisableWithInitPrikup(false)
-                    setUserCards(prev => [...prev, {type}])}}
+                    setDisableWithInitPrikup(false);
+                    setUserCards(prev => [...prev, { type }]);
+                  }}
                 />
               </Styled.CardPrikup>
             ))}
@@ -105,5 +106,5 @@ export function Player({
         ))}
       </Styled.Container>
     </Styled.Wrapper>
-  )
+  );
 }

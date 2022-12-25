@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   position: absolute;
@@ -8,21 +8,21 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-`
+`;
 
 export const PlayedCards = styled.div`
   position: absolute;
   top: 8px;
   left: 8px;
-`
+`;
 export const Row = styled.div`
   display: flex;
   width: 160px;
   height:70px;
   margin: 4px;
-`
+`;
 export const Points = styled.div`
   position: absolute;
   top: 8px;
   right: 8px;
-`
+`;
