@@ -41,7 +41,7 @@ export function Authorization({ setUser }: TProps) {
     <Styled.AuthorizationCantainer>
       <Styled.Name color={color}>{message}</Styled.Name>
       <form onSubmit={handleSubmit}>
-        <GlobalStyled.Input onChange={handleChange} value={value} />
+        <GlobalStyled.Input onChange={handleChange} value={value} autoFocus/>
       </form>
     </Styled.AuthorizationCantainer>
   )
