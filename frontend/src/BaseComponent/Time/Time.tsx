@@ -14,7 +14,9 @@ export function Time() {
     },1000)
   return ()=>clearInterval(interval)
   })
+  const minutes = duration.minutes() < 10 ? '0' + duration.minutes() : duration.minutes()
+  const seconds = duration.seconds() < 10 ? '0' + duration.seconds() : duration.seconds()
   return (
-    <div>{duration.hours() + ":" + duration.minutes() + ":" + duration.seconds()}</div>
+    <div>{duration.hours() + ":" + minutes + ":" + seconds}</div>
   )
 }
