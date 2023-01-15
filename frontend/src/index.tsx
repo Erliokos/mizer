@@ -5,9 +5,12 @@ import * as GlobalStyled from './GlobalStyle'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
+  uri: process.env.REACT_APP_DOMAIN,
   cache: new InMemoryCache()
 })
+
+console.log(process.env);
+
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
