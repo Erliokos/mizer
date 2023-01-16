@@ -45,6 +45,7 @@ fragment CardOnTable on CardOnTable {
 
 fragment Card on Card {
   type
+  order
 }
 
 fragment User on User {

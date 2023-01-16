@@ -50,6 +50,7 @@ const schema = buildSchema(`
     
     type Card {
         type: ECardType!
+        order: Int!
     }
 
     input PrikupInput {
@@ -85,6 +86,12 @@ const schema = buildSchema(`
         points: [Points!]!
         endGame: Boolean!
     }
+
+    input ChangeOrderInput {
+        id: ID
+        cardTypeOne: String!
+        cardTypeTwo: String!
+    }
     
     type Query {
         getAllUsers: [User]!
@@ -99,6 +106,7 @@ const schema = buildSchema(`
         getPrikup: [Card!]!
         putPrikup(input: PrikupInput): User
         putCard(input: PutCardInput): [Card!]!
+        changeOrder(input: ChangeOrderInput): [Card!]!
     }
 `)
 

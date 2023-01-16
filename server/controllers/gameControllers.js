@@ -128,7 +128,9 @@ const getGame = ({ id }) => {
   return {
     cardOnTable: Game.cardOnTable,
     userCards: Game.userCards.length
-      ? Game.userCards.find(item => item.position.id === id).cards
+      ? Game.userCards
+          .find(item => item.position.id === id)
+          .cards.sort((a, b) => a.order - b.order)
       : [],
     userMove: () => users[getOrder()],
     initPrikup: Game.initPrikup,
@@ -146,10 +148,10 @@ const getGame = ({ id }) => {
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+    let j = Math.floor(Math.random() * (i + 1))
+    ;[array[i], array[j]] = [array[j], array[i]]
   }
-  return array;
+  return array
 }
 
 const getRandomCard = () => {
@@ -168,24 +170,24 @@ const initGame = () => {
   Game.userCards = [
     {
       position: users[0],
-      cards: userCard.map(item => ({ type: item })),
+      cards: userCard.map((item, order) => ({ type: item, order })),
       bank: [],
       point: 0
     },
     {
       position: users[1],
-      cards: userCard1.map(item => ({ type: item })),
+      cards: userCard1.map((item, order) => ({ type: item, order })),
       bank: [],
       point: 0
     },
     {
       position: users[2],
-      cards: userCard2.map(item => ({ type: item })),
+      cards: userCard2.map((item, order) => ({ type: item, order })),
       bank: [],
       point: 0
     }
   ]
-  Game.prikup = prikup.map(item => ({ type: item }))
+  Game.prikup = prikup.map(item => ({ type: item, order: 10 }))
   Game.initPrikup = true
 }
 
@@ -257,7 +259,6 @@ const putPrikup = ({ input: { prikup } }) => {
     (acc, item) => acc + CardsPoint[item].point,
     0
   )
-  console.log(curentUserCard)
   Game.prikupSave = false
   return users[getOrder()]
 }
@@ -284,7 +285,6 @@ const computeCard = list => {
   curentUserCard.point =
     curentUserCard.point +
     generalCard.reduce((acc, item) => acc + item.point, 0)
-  console.log(curentUserCard)
 }
 
 const computeStep = list => {
@@ -315,6 +315,18 @@ const putCard = ({ input: { type } }) => {
   return []
 }
 
+const changeOrder = ({
+  input: { id, cardTypeOne, cardTypeTwo }
+}) => {
+  const userCards = Game.userCards.find(item => item.position.id === id).cards
+
+  userCards.forEach(item => {
+    if(item.type === cardTypeOne) item.type = cardTypeTwo
+    else if(item.type === cardTypeTwo) item.type = cardTypeOne
+  })
+  return userCards
+}
+
 module.exports = {
   getGame,
   getAllUsers,
@@ -323,5 +335,6 @@ module.exports = {
   passPrikup,
   getPrikup,
   putPrikup,
-  putCard
+  putCard,
+  changeOrder
 }

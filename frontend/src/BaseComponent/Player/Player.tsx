@@ -1,6 +1,10 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Button } from '../../common/ui-kit/Button'
-import { usePutCardMutation, usePutPrikupMutation } from '../../generated/hooks'
+import {
+  useChangeOrderMutation,
+  usePutCardMutation,
+  usePutPrikupMutation
+} from '../../generated/hooks'
 import {
   Card as CType,
   CardOnTable,
@@ -29,12 +33,31 @@ export function Player({
 }: TProps) {
   const [prikup, setPrikup] = useState<CType[]>([])
 
-  const [disableWithInitPrikup, setDisableWithInitPrikup] = useState<boolean>(false)
-  
+  const [disableWithInitPrikup, setDisableWithInitPrikup] =
+    useState<boolean>(false)
 
-  useEffect(()=>{
+  const [cardTypeOne, setCardTypeOne] = useState<string | null>(null)
+  const [cardTypeTwo, setCardTypeTwo] = useState<string | null>(null)
+
+  const [changeOrder] = useChangeOrderMutation()
+
+  const handleSaveChange = () => {
+    if (!cardTypeOne || !cardTypeTwo) return
+    changeOrder({
+      variables: { input: { id: user.id, cardTypeOne, cardTypeTwo } },
+      onCompleted: (data)=>{
+        setUserCards(data.changeOrder)
+      }
+    })
+  }
+
+  useEffect(() => {
+      handleSaveChange()
+  }, [cardTypeTwo])
+
+  useEffect(() => {
     setDisableWithInitPrikup(false)
-  },[disable, cards])
+  }, [disable, cards])
 
   const [putPrikup] = usePutPrikupMutation()
   const [putCard] = usePutCardMutation()
@@ -49,19 +72,20 @@ export function Player({
   const handleChangeCardsOnTable = (type: ECardType) => {
     if (prikupSave && cards.length > 9) {
       setPrikup(prev => {
-        const cards = [...prev, { type }]
+        const cards = [...prev, { type, order: prev.length }]
         if (cards.length === 2) setDisableWithInitPrikup(true)
         return cards
       })
       return
     }
-    putCard({variables: {input:{type}}}).then()
+    putCard({ variables: { input: { type } } }).then()
     setDisableWithInitPrikup(true)
     setCardsOnTable(prev => {
       const enemyCards = prev.filter(item => item.position.id !== user.id)
       const myCard: CardOnTable = {
         card: {
-          type
+          type,
+          order: prev.length
         },
         position: user
       }
@@ -73,7 +97,9 @@ export function Player({
     <Styled.Wrapper>
       {prikup.length > 0 && prikupSave && (
         <>
-          {prikup.length === 2 && <Button text={'Положить'} onClick={handleClickPutPrikup}/>}
+          {prikup.length === 2 && (
+            <Button text={'Положить'} onClick={handleClickPutPrikup} />
+          )}
           <Styled.Prikup>
             {prikup.map(item => (
               <Styled.CardPrikup key={item.type + 'styleType'}>
@@ -81,9 +107,10 @@ export function Player({
                   key={item.type}
                   {...item}
                   setCards={setPrikup}
-                  handleChangeCardsOnTable={(type)=>{
+                  handleChangeCardsOnTable={(type, order) => {
                     setDisableWithInitPrikup(false)
-                    setUserCards(prev => [...prev, {type}])}}
+                    setUserCards(prev => [...prev, { type, order }])
+                  }}
                 />
               </Styled.CardPrikup>
             ))}
@@ -92,17 +119,21 @@ export function Player({
       )}
 
       <Styled.Container>
-        {cards.filter(item => !prikup.map(t => t.type).includes(item.type)).map(item => (
-          <Styled.Card key={item.type + 'style'}>
-            <Card
-              disable={disable || disableWithInitPrikup}
-              key={item.type}
-              {...item}
-              setCards={setUserCards}
-              handleChangeCardsOnTable={handleChangeCardsOnTable}
-            />
-          </Styled.Card>
-        ))}
+        {cards
+          .filter(item => !prikup.map(t => t.type).includes(item.type))
+          .map(item => (
+            <Styled.Card key={item.type + 'style'}>
+              <Card
+                setCardTypeOne={setCardTypeOne}
+                setCardTypeTwo={setCardTypeTwo}
+                disable={disable || disableWithInitPrikup}
+                key={item.type}
+                {...item}
+                setCards={setUserCards}
+                handleChangeCardsOnTable={handleChangeCardsOnTable}
+              />
+            </Styled.Card>
+          ))}
       </Styled.Container>
     </Styled.Wrapper>
   )
