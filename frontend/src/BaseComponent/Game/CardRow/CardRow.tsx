@@ -10,7 +10,7 @@ export function CardRow({ pcards }: PCards) {
   return (
     <Styled.Row>
       {pcards.map(item => (
-        <Card type={item.type} />
+        <Card type={item.type} order={item.order} />
       ))}
     </Styled.Row>
   )

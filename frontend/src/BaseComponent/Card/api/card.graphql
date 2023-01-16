@@ -1,0 +1,5 @@
+mutation ChangeOrder($input: ChangeOrderInput){
+  changeOrder(input: $input){
+    ...Card
+  }
+}

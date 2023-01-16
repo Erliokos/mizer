@@ -54,13 +54,13 @@ export function Table({ cards, players, message, prikup, userTurn }: TProps) {
       )}
       <Styled.Message>{message}</Styled.Message>
       <Styled.EnemyLeft>
-        {EnemyLeftCard && <Card type={EnemyLeftCard.card.type} />}
+        {EnemyLeftCard && <Card type={EnemyLeftCard.card.type} order={EnemyLeftCard.card.order} />}
       </Styled.EnemyLeft>
       <Styled.EnemyRight>
-        {EnemyRightCard && <Card type={EnemyRightCard.card.type} />}
+        {EnemyRightCard && <Card type={EnemyRightCard.card.type} order={EnemyRightCard.card.order} />}
       </Styled.EnemyRight>
       <Styled.Player>
-        {PlayerCard && <Card type={PlayerCard.card.type} />}
+        {PlayerCard && <Card type={PlayerCard.card.type} order={PlayerCard.card.order} />}
       </Styled.Player>
       <img src="img/table.png" style={{ height: '100%' }} alt={''} />
     </Styled.Table>
